@@ -12,7 +12,7 @@ const App = () => {
         const result = await response.json();
         setData(result);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.log('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
@@ -24,9 +24,9 @@ const App = () => {
   return (
     <div>
       {loading ? (
-        <p>Loading...</p>
+        <h1>Loading...</h1>
       ) : (
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+        <pre><h1>{JSON.stringify(data, null, 2)}</h1></pre>
       )}
     </div>
   );
