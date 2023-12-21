@@ -26,7 +26,7 @@ const App = () => {
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        <pre><h1>{JSON.stringify(data, null, 2)}</h1></pre>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
       )}
     </div>
   );
