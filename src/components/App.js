@@ -11,10 +11,9 @@ const App = () => {
       try {
         const response = await fetch('https://dummyjson.com/products');
         const result = await response.json();
-        console.log(result)
         setData(result);
       }catch (error) {
-        console.log(error);
+        console.log(error.message);
       } finally {
         setLoading(false);
       }
@@ -26,7 +25,7 @@ const App = () => {
     <div>
       <div>
       {loading ? (
-        <h1>Loading...</h1>
+        <p>Loading...</p>
       ) : (
         <pre><h1>{JSON.stringify(data, null, 2)}</h1></pre>
       )}
