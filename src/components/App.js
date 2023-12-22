@@ -1,35 +1,38 @@
-import React, { useState, useEffect } from 'react';
-let regeneratorRuntime =  require("regenerator-runtime");
-//import axios from 'axios';
-//let baseURL = "https://dummy.com/products"
+import React, { useState } from "react";
+import Axios from "axios";
+import "./../styles/App.css";
+
+import Weather from "./WeatherApp";
+
+const URL = "https://api.openweathermap.org/data/2.5/weather?q=";
+const API_KEY = "1b0a153a1e8e3418236afce6fa7462ca";
+
 const App = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [searchInput, setSearchInput] = useState("");
+  const [weatherData, setWeatherData] = useState({});
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://dummyjson.com/products');
-        const result = await response.json();
-        setData(result);
-      }catch (error) {
-        console.log(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  function getSearch(e) {
+    e.preventDefault();
 
-    fetchData();
-  }, []);
+    Axios.get(`${URL}${searchInput}&appid=${API_KEY}`)
+      .then((res) => setWeatherData(res))
+      .catch((err) => console.log(err));
+
+    setSearchInput("");
+  }
+
   return (
     <div>
-      <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <pre><h1>{JSON.stringify(data, null, 2)}</h1></pre>
-      )}
-    </div>
+      <form onSubmit={getSearch}>
+        <input
+          className="search"
+          type="text"
+          placeholder="Enter a city"
+          onChange={(e) => setSearchInput(e.target.value)}
+          value={searchInput}
+        />
+      </form>
+      <Weather data={weatherData} />
     </div>
   );
 };
