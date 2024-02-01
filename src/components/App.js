@@ -7,6 +7,7 @@ import 'regenerator-runtime/runtime'
 
 const App = () => {
   const [data, setData] = useState([]);
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(true);
 
   const func = async () => {
@@ -14,17 +15,18 @@ const App = () => {
       setLoading(true);
         const res = await fetch("https://dummyjson.com/products")
         const data = await res.json();
-        if(data.length>=1){
+        if(data.products.length>=1){
           setData(data.products)
         }
         else{
           setData([])
         }
+        console.log(data.products.length)
         console.log(data.products)
     }
     catch(error){
-        console.log("An error occurred:",error.message)
-        setData([])
+      setError(error)
+        console.log("An error occurred:",error)
     }
     finally {
       setLoading(false);
@@ -44,6 +46,9 @@ useEffect(()=>{
           <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
       )
+        }
+        {error &&
+          <p>{error}</p>
         }
     </div>
   );
