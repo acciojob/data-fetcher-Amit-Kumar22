@@ -14,11 +14,17 @@ const App = () => {
       setLoading(true);
         const res = await fetch("https://dummyjson.com/products")
         const data = await res.json();
-        setData(data.products)
+        if(data.length>=1){
+          setData(data.products)
+        }
+        else{
+          setData([])
+        }
         console.log(data.products)
     }
     catch(error){
-        console.log(error.message)
+        console.log("An error occurred:",error.message)
+        setData([])
     }
     finally {
       setLoading(false);
@@ -34,7 +40,7 @@ useEffect(()=>{
         <p>Loading...</p>
       ) : (
         <div>
-          <h1>Data Fetched from API </h1>
+          <h1>Data Fetched from API</h1>
           <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
       )
